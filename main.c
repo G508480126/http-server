@@ -31,7 +31,8 @@ void handle_request(char *pIdentfier, char *pUri)
 			fptr = fopen (fname,"w");
 			fputs("#!/bin/bash\n",fptr);
 			fputs("echo \"Streaming Invoked\"\n",fptr);
-			snprintf(gstreamCommond,2048,"/usr/bin/gst-launch-1.0 rtspsrc location=%s ! rtph264depay name=demux ! h264parse ! queue ! westerossink rectangle=\"920,450,320,240\" &\n",last1);
+			snprintf(gstreamCommond,2048,"/usr/bin/gst-launch-1.0 rtspsrc location=%s ! rtph264depay name=demux ! h264parse ! avdec_h264 ! videoconvert ! glimagesink & \n",last1);
+			
 			fputs(gstreamCommond,fptr);
 			fputs("echo \"Streaming Ended\"\n",fptr);
 			fputs("sleep 30\n",fptr);
